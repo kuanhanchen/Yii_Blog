@@ -17,7 +17,14 @@
 	                'config' => [
 	                    'imagePathFormat' => "/image/{yyyy}{mm}{dd}/{time}{rand:6}",
 	                ]
-	            ]
+	            ],
+			    'ueditor'=>[
+			        'class' => 'common\widgets\ueditor\UeditorAction',
+			        'config'=>[
+			            'imageUrlPrefix' => "",
+			            'imagePathFormat' => "/image/{yyyy}{mm}{dd}/{time}{rand:6}",
+			        ]
+			    ]
 	        ];
 	    }
     

@@ -25,13 +25,15 @@ $this->params['breadcrumbs'][] = $this->title;
 			
 			<?=$form->field($model, 'cat_id')->dropDownList($cat)?>
 
-			<?=$form->field($model, 'label_img')->textinput(['maxlength'=>true])?>
-
 			<?= $form->field($model, 'label_img')->widget('common\widgets\file_upload\FileUpload',[
 		        'config'=>[]
 		    ]) ?>
 			
-			<?=$form->field($model, 'content')->textinput(['maxlength'=>true])?>
+			<?= $form->field($model, 'content')->widget('common\widgets\ueditor\Ueditor',[
+			    'options'=>[
+			        'initialFrameHeight' => 400,
+			    ]
+			]) ?>
 
 			<?=$form->field($model, 'tags')->textinput(['maxlength'=>true])?>
 			
