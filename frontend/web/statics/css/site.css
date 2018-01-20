@@ -95,6 +95,17 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
+.navbar-right > li > a.avatar {
+    padding-top: 10px;
+    padding-bottom: 0;
+}
+
+.navbar-right > li > a.avatar img {
+    border: #ccc solid 1px;
+    width: 32px;
+    height: 32px;
+}
+
 /* align the logout "link" (button in form) of the navbar */
 .nav li > form > button.logout {
     padding: 15px;

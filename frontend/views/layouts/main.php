@@ -35,27 +35,33 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
+    $leftMenuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Post', 'url' => ['/post/index']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $rightMenuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+        $rightMenuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
+        $rightMenuItems[] = [
+            'label' => '<img src = "'.Yii::$app->params['avatar']['small'].'" alt="'.Yii::$app->user->identity->username.'">',
+            'url' => ['/site/logout'],
+            'linkOptions' => ['class'=>'avatar'],
+            'items' => [[
+                'label' => '<i class="fa fa-sign-out"></i> Logout',
+                'url' => ['/site/logout'],
+                'linkOptions' => ['data-method'=>'post']],
+            ],
+        ];
     }
     echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-left'],
+        'items' => $leftMenuItems,
+    ]);
+    echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
+        'encodeLabels' => false,
+        'items' => $rightMenuItems,
     ]);
     NavBar::end();
     ?>
