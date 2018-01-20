@@ -28,9 +28,9 @@ class PostForm extends Model
 			'id' => 'ID',
 			'title' => 'Title',
 			'content' => 'Content',
-			'Label_img' => 'Label Image',
+			'label_img' => 'Label Image',
 			'tags' => 'Tags',
-			'cat_id' => 'Categories'
+			'cat_id' => 'Category'
 		];
 	}
 }

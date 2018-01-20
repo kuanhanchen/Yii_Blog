@@ -2,6 +2,7 @@
 	
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+// use common\models\CatModel;
 
 // create breadcrumbs: Home/Post/Create
 $this->title = 'Create';
@@ -22,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			
 			<?=$form->field($model, 'title')->textinput(['maxlength'=>true])?>
 			
-			<?=$form->field($model, 'cat_id')->dropDownList(['1'=>'Category 1', '2'=>'Category 2', '3'=>'Category 3'])?>
+			<?=$form->field($model, 'cat_id')->dropDownList($cat)?>
 
 			<?=$form->field($model, 'label_img')->textinput(['maxlength'=>true])?>
 			

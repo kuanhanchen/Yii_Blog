@@ -5,6 +5,7 @@
 	use Yii;
 	use frontend\controllers\base\BaseController;
 	use frontend\models\PostForm;
+	use common\models\CatModel;
 
 	class PostController extends BaseController
 	{
@@ -18,7 +19,10 @@
 		public function actionCreate()
 		{
 			$model = new PostForm();
-			return $this->render('create', ['model' => $model]);
+
+			// get all categories from database
+			$cat = CatModel::getAllCats();
+			return $this->render('create', ['model' => $model, 'cat'=>$cat]);
 
 		}
 	}
