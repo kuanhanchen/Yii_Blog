@@ -1,5 +1,6 @@
 <?php
 namespace frontend\models;
+use yii\base\Model;
 
 class PostForm extends Model
 {
@@ -17,7 +18,7 @@ class PostForm extends Model
 		return [
 			[['id', 'title', 'content', 'cat_id'], 'required'],
 			[['id', 'cat_id'], 'integer'],
-			['title', 'string', 'min'=>4, 'max'=<50],
+			['title', 'string', 'min'=>4, 'max'=>50],
 		];
 	}
 
@@ -28,7 +29,8 @@ class PostForm extends Model
 			'title' => 'Title',
 			'content' => 'Content',
 			'Label_img' => 'Label Image',
-			'tags' => 'Tags'
+			'tags' => 'Tags',
+			'cat_id' => 'Categories'
 		];
 	}
 }
