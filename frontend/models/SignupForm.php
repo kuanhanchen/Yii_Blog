@@ -11,6 +11,8 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $rePassword;
+    public $verifyCode;
 
 
     /**
@@ -30,8 +32,22 @@ class SignupForm extends Model
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\UserModel', 'message' => 'This email address has already been taken.'],
 
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+
+            [['password', 'rePassword'], 'required'],
+            [['password', 'rePassword'], 'string', 'min' => 6],
+
+            ['rePassword', 'compare', 'compareAttribute' => 'password', 'message' => 'Two times the password is not consistent.'],
+
+
+            ['verifyCode', 'captcha']
+        ];
+    }
+
+    public function attributeLabels() 
+    {
+        return [
+            'rePassword' => 'Confirm Password',
+            'verifyCode' => 'Captcha'
         ];
     }
 
