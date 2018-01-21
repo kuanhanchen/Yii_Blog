@@ -39,8 +39,20 @@
 		{
 			$model = new PostForm();
 
+			// define scenarios
+			$model->setScenario(PostForm::SCENARIOS_CREATE);
+			if($model->load(Yii::$app->request->post()) && $model->validate()) {
+				if(!$model->create()) {
+					Yii::$app->session->setFlash('warning', $model->_lastError);
+				} else {
+					return $this->redirect(['post/view', 'id'=>$model->id]);
+				}
+			}
+
 			// get all categories from database
 			$cat = CatModel::getAllCats();
+
+			// render to post/create, so in post/create view, we can use $model and $cat
 			return $this->render('create', ['model' => $model, 'cat'=>$cat]);
 
 		}

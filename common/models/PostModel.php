@@ -19,8 +19,14 @@ use common\models\base\BaseModel;
  * @property int $created_at
  * @property int $updated_at
  */
-class PostsModel extends BaseModel
+class PostModel extends BaseModel
 {
+    // pulished
+    const IS_VALID = 1;
+
+    // unpublished
+    const NO_VALID = 0;
+
     /**
      * @inheritdoc
      */
