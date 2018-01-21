@@ -6,9 +6,43 @@
 	use frontend\controllers\base\BaseController;
 	use frontend\models\PostForm;
 	use common\models\CatModel;
+	use yii\filters\VerbFilter;
+	use yii\filters\AccessControl;
 
 	class PostController extends BaseController
 	{
+		public function behaviors()
+	    {
+	        return [
+	            'access' => [
+	                'class' => AccessControl::className(),
+	                'only' => ['index', 'create', 'upload', 'ueditor'],
+	                'rules' => [
+	                    [
+	                    	// 'roles' => ['?'] means access only for logout
+	                    	// so here we delete it to make no matter login or not, we can access index
+	                        'actions' => ['index'],
+	                        'allow' => true,
+	                        // 'roles' => ['?'],
+	                    ],
+	                    [	
+	                    	// @ means access only for login
+	                        'actions' => ['create', 'upload', 'ueditor'],
+	                        'allow' => true,
+	                        'roles' => ['@'],
+	                    ],
+	                ],
+	            ],
+	            'verbs' => [
+	                'class' => VerbFilter::className(),
+	                'actions' => [
+	                	// all methods can use get and post
+	                	'*' => ['get', 'post']
+	                ],
+	            ],
+	        ];
+	    }
+
 		public function actions()
 	    {
 	        return [

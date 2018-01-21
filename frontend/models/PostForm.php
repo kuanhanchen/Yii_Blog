@@ -4,6 +4,8 @@ use yii\base\Model;
 
 use Yii;
 use common\models\PostModel;
+use common\models\RelationPostTagModel;
+use yii\db\Query;
 
 class PostForm extends Model
 {
@@ -18,6 +20,9 @@ class PostForm extends Model
 
 	const SCENARIOS_CREATE = 'create';
 	const SCENARIOS_UPDATE = 'update';
+
+	const EVENT_AFTER_CREATE = "eventAfterCreate";
+	const EVENT_AFTER_UPDATE = "eventAfterUpdate";
 
 	public function rules()
 	{
@@ -66,7 +71,9 @@ class PostForm extends Model
 				throw new \Exception('Saving Post Fails!');
 			}
 			$this->id = $model->id;
-			$this->_eventAfterCreate();
+			
+			$data = array_merge($this->getAttributes(), $model->getAttributes());
+			$this->_eventAfterCreate($data);
 
 			$transaction->commit();
 			return true;
@@ -89,9 +96,39 @@ class PostForm extends Model
 		return (mb_substr(str_replace('&nbsp;', '', strip_tags($this->content)), $s, $e, $char));
 	}
 
-	public function _eventAfterCreate()
+	// event after creating post
+	public function _eventAfterCreate($data)
 	{
+		// add event about adding tag to EVENT_AFTER_CREATE
+		$this->on(self::EVENT_AFTER_CREATE, [$this, '_eventAddTag'], $data);
 
+		// trigger event
+		$this->trigger(self::EVENT_AFTER_CREATE);
+
+	}
+
+	// add tag event
+	public function _eventAddTag($event)
+	{
+		$tag = new TagForm();
+		$tag->tags = $event->data['tags'];
+		$tagIds = $tag->saveTags();
+
+		// delete the current tag relation
+		RelationPostTagModel::deleteAll(['post_id' => $event->data['id']]);
+
+		// save the latest relation of post and tag
+		if(!empty($tagids)) {
+			foreach($tagids as $k=>$id) {
+				$row[$k]['post_id'] = $this->id;
+				$row[$k]['tag_id'] = $id;
+			}
+
+			$res = (new Query())->createCommand()->bachInsert(RelationPostTagModel::tableName(), ['post_id', 'tag_id'], $row)->execute();
+			if(!$res) {
+				throw new \Exception("Save Relation Fail!");
+			}
+		} 
 	}
 
 }
