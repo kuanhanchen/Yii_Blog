@@ -73,4 +73,9 @@ class PostModel extends BaseModel
         // id of post table -> post_id of relation_post_tag table
         return $this->hasMany(RelationPostTagModel::className(), ['post_id'=>'id']);
     }
+
+    public function getExtend()
+    {
+        return $this->hasOne(PostExtendModel::className(), ['post_id' => 'id']);
+    }
 }

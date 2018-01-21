@@ -8,6 +8,7 @@
 	use common\models\CatModel;
 	use yii\filters\VerbFilter;
 	use yii\filters\AccessControl;
+	use common\models\PostExtendModel;
 
 	class PostController extends BaseController
 	{
@@ -93,9 +94,13 @@
 
 		public function actionView($id)
 		{
-			// get data by id
+			// get data by id from post table
 			$model = new PostForm();
 			$data = $model->getViewById($id);
+
+			// get related numbers of post from postextends table
+			$model = new PostExtendModel();
+			$model->upCounter(['post_id'=>$id], 'browser', 1);
 
 			return $this->render('view', ['data'=>$data]);
 		}

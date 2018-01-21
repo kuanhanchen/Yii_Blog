@@ -136,7 +136,7 @@ class PostForm extends Model
 		// get data by id from post table
 		// we connect to relate table first (getRelate)
 		// then tag table (getTag)
-		$res = PostModel::find()->with('relate.tag')->where(['id'=>$id])->asArray()->one();
+		$res = PostModel::find()->with('relate.tag', 'extend')->where(['id'=>$id])->asArray()->one();
 
 		if(!$res) {
 			throw new NotFoundHttpException('Post Not Found');

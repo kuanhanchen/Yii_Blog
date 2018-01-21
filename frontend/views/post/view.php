@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<h1><?=$data['title']?></h1>
 			<span>Author: <?=$data['user_name']?></span>
 			<span>Published Date: <?=date('Y-m-d',$data['created_at'])?></span>
-			<span>Viewed:</span>
+			<span>Viewed: <?=isset($data['extend']['browser'])?$data['extend']['browser']:0?></span>
 		</div>
 	
 		<div class="page-content">
