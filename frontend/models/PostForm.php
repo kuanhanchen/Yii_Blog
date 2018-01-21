@@ -49,8 +49,8 @@ class PostForm extends Model
 	public function scenarios()
 	{
 		$scenarios = [
-			self::SCENARIOS_CREATE => ['title', 'content', 'labe_img', 'cat_id', 'tags'],
-			self::SCENARIOS_UPDATE => ['title', 'content', 'labe_img', 'cat_id', 'tags'],
+			self::SCENARIOS_CREATE => ['title', 'content', 'label_img', 'cat_id', 'tags'],
+			self::SCENARIOS_UPDATE => ['title', 'content', 'label_img', 'cat_id', 'tags'],
 		];
 		return array_merge(parent::scenarios(), $scenarios);
 	}
@@ -118,13 +118,13 @@ class PostForm extends Model
 		RelationPostTagModel::deleteAll(['post_id' => $event->data['id']]);
 
 		// save the latest relation of post and tag
-		if(!empty($tagids)) {
-			foreach($tagids as $k=>$id) {
+		if(!empty($tagIds)) {
+			foreach($tagIds as $k=>$id) {
 				$row[$k]['post_id'] = $this->id;
 				$row[$k]['tag_id'] = $id;
 			}
 
-			$res = (new Query())->createCommand()->bachInsert(RelationPostTagModel::tableName(), ['post_id', 'tag_id'], $row)->execute();
+			$res = (new Query())->createCommand()->batchInsert(RelationPostTagModel::tableName(), ['post_id', 'tag_id'], $row)->execute();
 			if(!$res) {
 				throw new \Exception("Save Relation Fail!");
 			}

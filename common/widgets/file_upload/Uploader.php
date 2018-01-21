@@ -275,9 +275,9 @@ class Uploader
     private function getFilePath()
     {
         $fullname = $this->fullName;       
-        //$rootPath = isset($this->config['uploadFilePath'])&&!empty($this->config['uploadFilePath'])?$this->config['uploadFilePath']:$_SERVER['DOCUMENT_ROOT'];
+        $rootPath = isset($this->config['uploadFilePath'])&&!empty($this->config['uploadFilePath'])?$this->config['uploadFilePath']:$_SERVER['DOCUMENT_ROOT'];
         
-        $rootPath = $_SERVER['DOCUMENT_ROOT'];
+        // $rootPath = $_SERVER['DOCUMENT_ROOT'];
 
         if (substr($fullname, 0, 1) != '/') {
             $fullname = '/' . $fullname;
