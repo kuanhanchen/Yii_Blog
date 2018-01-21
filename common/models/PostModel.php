@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use common\models\base\BaseModel;
+use common\models\RelationPostTagModel;
 /**
  * This is the model class for table "posts".
  *
@@ -65,5 +66,11 @@ class PostModel extends BaseModel
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    public function getRelate()
+    {   
+        // id of post table -> post_id of relation_post_tag table
+        return $this->hasMany(RelationPostTagModel::className(), ['post_id'=>'id']);
     }
 }

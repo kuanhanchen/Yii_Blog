@@ -131,4 +131,108 @@ class PostForm extends Model
 		} 
 	}
 
+	public function getViewById($id)
+	{
+		// get data by id from post table
+		// we connect to relate table first (getRelate)
+		// then tag table (getTag)
+		$res = PostModel::find()->with('relate.tag')->where(['id'=>$id])->asArray()->one();
+
+		if(!$res) {
+			throw new NotFoundHttpException('Post Not Found');
+		}
+
+		// print_r($res);exit;
+		// when with('relate')
+		// Array
+		// (
+		//     [id] => 132
+		//     [title] => test tagsss
+		//     [summary] => gregegergerg
+		//     [content] => <p>gregegergerg</p>
+		//     [label_img] => /image/20180121/1516566233245785.jpg
+		//     [cat_id] => 6
+		//     [user_id] => 2
+		//     [user_name] => abc
+		//     [is_valid] => 1
+		//     [created_at] => 1516566292
+		//     [updated_at] => 1516566292
+		//     [relate] => Array
+		//         (
+		//             [0] => Array
+		//                 (
+		//                     [id] => 66
+		//                     [post_id] => 132
+		//                     [tag_id] => 49
+		//                 )
+
+		//             [1] => Array
+		//                 (
+		//                     [id] => 67
+		//                     [post_id] => 132
+		//                     [tag_id] => 50
+		//                 )
+
+		//         )
+
+		// )
+	
+	// ->
+
+		// when with('relate.tag')
+		// [relate] => Array
+		//         (
+		//             [0] => Array
+		//                 (
+		//                     [id] => 66
+		//                     [post_id] => 132
+		//                     [tag_id] => 49
+		//                     [tag] => Array
+	 //                        (
+	 //                            [id] => 49
+	 //                            [tag_name] => tag33
+	 //                            [post_num] => 1
+	 //                        )
+
+		//                 )
+
+		//             [1] => Array
+		//                 (
+		//                     [id] => 67
+		//                     [post_id] => 132
+		//                     [tag_id] => 50
+		//                     [tag] => Array
+	 //                        (
+	 //                            [id] => 50
+	 //                            [tag_name] => tag99
+	 //                            [post_num] => 1
+	 //                        )
+		//                 )
+
+		//         )
+
+
+		// deal with tag format
+		$res['tags'] = [];
+		if(isset($res['relate']) && !empty($res['relate']))
+		{
+			foreach($res['relate'] as $list) {
+				$res['tags'][] = $list['tag']['tag_name'];
+			}
+		}
+
+		unset($res['relate']);
+
+		// print_r($res); exit;
+		// when with('relate.tag') after unset and changing tag format
+		//     [tags] => Array
+		//         (
+		//             [0] => tag33
+		//             [1] => tag99
+		//         )
+
+		return $res;
+
+	}
+
 }

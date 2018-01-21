@@ -90,4 +90,13 @@
 			return $this->render('create', ['model' => $model, 'cat'=>$cat]);
 
 		}
+
+		public function actionView($id)
+		{
+			// get data by id
+			$model = new PostForm();
+			$data = $model->getViewById($id);
+
+			return $this->render('view', ['data'=>$data]);
+		}
 	}
