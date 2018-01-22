@@ -4,6 +4,7 @@ use yii\base\Widget;
 use frontend\widgets\post\PostWidget;
 use frontend\widgets\chat\ChatWidget;
 use frontend\widgets\hot\HotWidget;
+use frontend\widgets\tag\TagWidget;
 /* @var $this yii\web\View */
 $this->title = 'Greg Yii Blog';
 ?>
@@ -21,5 +22,7 @@ $this->title = 'Greg Yii Blog';
         <?=ChatWidget::widget()?>
         <!-- Popular Post List -->
         <?=HotWidget::widget()?>
+        <!-- Tag List -->
+        <?=TagWidget::widget()?>
     </div>
 </div>

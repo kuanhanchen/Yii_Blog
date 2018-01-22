@@ -2,6 +2,7 @@
 use frontend\widgets\post\PostWidget;
 use yii\base\Widget;
 use frontend\widgets\hot\HotWidget;
+use frontend\widgets\tag\TagWidget;
 use yii\helpers\Url;
 ?>
 <div class="row">
@@ -16,6 +17,10 @@ use yii\helpers\Url;
 			<?php endif;?>
 		</div>
 		
+		<!-- Popular Post List -->
 		<?=HotWidget::widget();?>
+
+		<!-- Tag List -->
+        <?=TagWidget::widget()?>
 	</div>
 </div>
