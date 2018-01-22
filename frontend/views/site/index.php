@@ -2,6 +2,7 @@
 use frontend\widgets\banner\BannerWidget;
 use yii\base\Widget;
 use frontend\widgets\post\PostWidget;
+use frontend\widgets\chat\ChatWidget;
 /* @var $this yii\web\View */
 $this->title = 'Greg Yii Blog';
 ?>
@@ -10,13 +11,12 @@ $this->title = 'Greg Yii Blog';
     <div class="col-lg-9">
         <!-- Carousel -->
         <?=BannerWidget::widget()?>
-    </div>
-    <div class="col-lg-3">
-    </div>
 
-    <div class="col-lg-9">
         <!-- Post List -->
         <?=PostWidget::widget()?>
     </div>
-
+    <div class="col-lg-3">
+        <!-- Chat -->
+        <?=ChatWidget::widget()?>
+    </div>
 </div>
