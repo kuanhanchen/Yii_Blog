@@ -235,4 +235,39 @@ class PostForm extends Model
 
 	}
 
+	// set some default values in parameters
+	public static function getList($cond, $curPage = 1, $pageSize = 5, $orderBy = ['id'=>SORT_DESC])
+	{
+		$model = new PostModel();
+
+		$select = ['id', 'title', 'summary', 'label_img', 'cat_id', 'user_id', 'user_name', 'is_valid', 'created_at', 'updated_at'];
+
+		// about with('relate.tag', 'extend'), we already set getRelate(), getExtend() in PostModel and getTag() in TagModel
+		$query = $model->find()->select($select)->where($cond)->with('relate.tag', 'extend')->orderBy($orderBy);
+
+		// getPages() in BaseModel
+		// $res, get data in current page
+		$res = $model->getPages($query, $curPage, $pageSize);
+
+		// make data in desirable formatList format
+		$res['data'] = self::_formatList($res['data']);
+
+		return $res;
+	}
+
+	public static function _formatList($data)
+	{
+		// similar to getViewById()
+		foreach($data as $list) {
+			$list['tags'] = [];
+			if(isset($list['relate']) && !empty($list['relate'])) {
+				foreach($list['relate'] as $lt) {
+					$list['tags'][] = $lt['tag']['tag_name'];
+				}
+			}
+			unset($list['relate']);
+		}
+		return $data;
+	}
+
 }
