@@ -5,7 +5,7 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use backend\models\LoginForm;
 
 /**
  * Site controller
@@ -70,6 +70,10 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        // default layout: main.php
+        // redefine layout to be our login.php
+        $this->layout = 'login.php';
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
