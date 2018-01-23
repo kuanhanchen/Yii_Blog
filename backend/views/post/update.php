@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\PostModel */
 
-$this->title = 'Update Post Model: {nameAttribute}';
+$this->title = 'Update Post Content: ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Post List', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';

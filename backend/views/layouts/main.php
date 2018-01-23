@@ -190,7 +190,7 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'homeLink'=>[
                 'label' => '<i class="fa fa-home mr5"></i> '.Yii::t('yii', 'Home'),
-                'url' => '/',
+                'url' => './',
                 'encode' => false,
             ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

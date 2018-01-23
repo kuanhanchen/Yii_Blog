@@ -2,7 +2,7 @@
 namespace backend\widgets\sidebar;
 
 /**
- * 后台siderbar插件
+ * backend siderbar widget
  */
 use Yii;
 use yii\base\Widget;
