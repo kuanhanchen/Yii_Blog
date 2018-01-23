@@ -104,4 +104,22 @@
 
 			return $this->render('view', ['data'=>$data]);
 		}
+
+		
+		// update
+		public function actionUpdate($id)
+	    {
+	        $model = new PostForm();
+	        $model->setScenario(PostForm::SCENARIOS_CREATE);
+	        $model->getupdate($id);
+	        if ($model->load(Yii::$app->request->post()) && $model->validate()){
+	            if (!$model->update($id)){
+	                Yii::$app->session->setFlash('warning', $model->_lastError);
+	            }else{
+	                return $this->redirect(['post/view','id'=>$model->id]);
+	            }
+	        }
+	        $cats = CatModel::getAllCats();
+	        return $this->render('update',['model'=>$model,'cats' => $cats]);
+	    }
 	}

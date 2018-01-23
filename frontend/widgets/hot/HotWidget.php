@@ -1,7 +1,7 @@
 <?php
 namespace frontend\widgets\hot;
 /**
- * 热门浏览组件
+ * Hot Browse Widget
  */
 use Yii;
 use yii\base\Widget;

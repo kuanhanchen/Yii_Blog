@@ -270,4 +270,62 @@ class PostForm extends Model
 		return $data;
 	}
 
+
+
+// Update.php
+	public function getupdate($id)
+    {
+        $data = PostModel::find()->with('relate.tag')->where(['id'=>$id])->asArray()->one();
+        $data = self::_formatList2($data);
+//        $this->title = $data['title'];
+//        $this->cat_id = $data['cat_id'];
+//        $this->label_img = $data['label_img'];
+//        $this->content = $data['content'];
+//        $this->tags = $data['tags'];
+        $this->setAttributes($data);
+    }
+
+    // edit format of tag
+    private function _formatList2($data)
+    {	
+    	$list['tags'] = [];
+    	if(isset($data['relate']) && !empty($data['relate'])) {
+	        foreach ($data['relate'] as $list){
+	            $data['tags'][]= $list['tag']['tag_name'];
+	        }
+	    }
+        unset($data['relate']);
+        return $data;
+    }
+
+    // similar to create()
+    public function update($id)
+    {
+        $transaction = Yii::$app->db->beginTransaction();
+        try{
+            $postmodel = PostModel::find()->with('relate.tag')->where(['id'=>$id])->one();
+            $postmodel->setAttributes($this->attributes);
+            $postmodel->summary = $this->_getSummary();
+            $postmodel->user_id = Yii::$app->user->identity->id;
+            $postmodel->user_name = Yii::$app->user->identity->username;
+            $postmodel->is_valid = PostModel::IS_VALID;
+            $postmodel->updated_at = time();
+            if (!$postmodel->save()){
+                throw new \yii\base\Exception('Saving Post Fails!');
+            }
+            $this->id = $postmodel->id;
+            
+            $data = array_merge($this->getAttributes(),$postmodel->getAttributes());
+            $this->_eventAfterCreate($data);
+            
+            $transaction->commit();
+            return true;
+        }catch ( \yii\base\Exception $e)
+        {
+            $transaction->rollBack();
+            $this->_lastError = $e->getMessage();
+            return false;
+        }
+    }
+
 }
