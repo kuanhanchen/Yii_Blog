@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\TagModel */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Tag Models', 'url' => ['index']];
+$this->title = $model->tag_name;
+$this->params['breadcrumbs'][] = ['label' => 'Tag List', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tag-model-view">
